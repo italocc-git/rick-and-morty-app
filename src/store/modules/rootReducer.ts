@@ -1,6 +1,6 @@
 import {combineReducers}  from 'redux'
-import {favorite} from './favorite/reducer'
+import {character} from './character/reducer'
 
 export default combineReducers({
-    favorite
+    character
 })

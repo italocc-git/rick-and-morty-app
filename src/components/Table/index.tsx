@@ -1,8 +1,14 @@
 import api from '@/services/api';
-import { IFavoriteCharacterState } from '@/store/modules/character/type';
+import {useDispatch } from 'react-redux'
+import { IFavoriteCharacterState } from '@/store/modules/character/type'
+import { useCallback} from 'react'
+import { addCharacterToFavorite, deleteCaracterFromList } from '@/store/modules/character/actions'
 import {
     LeftSquareOutlined,
-    RightSquareOutlined
+    RightSquareOutlined,
+    StarOutlined,
+    StarFilled
+    
   } from '@ant-design/icons';
 import {  TablePaginationConfig } from 'antd';
 import {useState , useEffect} from 'react'
@@ -11,6 +17,8 @@ import {
    StyledTable,
    StyledTag
   } from './styles';
+import Image from 'next/image';
+import Link from 'next/link'
 
 type TableProps = {
     endPointLink: string
@@ -21,6 +29,10 @@ type CharactersInfoProps = {
 }
 
   export const Table = ({endPointLink} : TableProps) => {
+
+    const dispatch = useDispatch()
+
+    
 
     const [characters, setCaracters] = useState<IFavoriteCharacterState[]>([])
     const [charactersInfo, setCaractersInfo] = useState<CharactersInfoProps>({} as CharactersInfoProps)
@@ -33,16 +45,38 @@ type CharactersInfoProps = {
         })
     }, [endPointLink, page])
     
+    const handleAddCharacterToFavorite = useCallback((character : IFavoriteCharacterState) => {
+
+      if(character.isFavorite){
+        dispatch(deleteCaracterFromList(character))
+      }
+      else {
+        dispatch(addCharacterToFavorite(character))
+      }
+
+      
+      
+      const alteredListOfCharacters = characters.map(item => item.id === character.id ? {...character, isFavorite: !character.isFavorite} : item)
+      setCaracters(alteredListOfCharacters)
+  }, [dispatch, characters])
+
     const columns = [
           {
-            title: 'ID',
-            dataIndex: 'id',
+            title: 'Avatar',
+            dataIndex: 'image',
             align: 'center' as const,
+            render: (imageUrl: string  , record : any) => 
+              <Image src={imageUrl} width={48} height={48} alt={record.name} />
           },
           {
             title: 'Nome',
             dataIndex: 'name',
             align: 'center' as const,
+            render: (name : string, character : any) => {
+              return <Link href={`/character/${character.id}`} >{name}</Link>
+            }
+              
+            
           },
           {
             title: 'Status',
@@ -50,13 +84,18 @@ type CharactersInfoProps = {
             align: 'center' as const,
             render : (status : string) => 
                 status === 'Alive' ? (
-                    <StyledTag color="success">
-                    Vivo
+                    <StyledTag color="#02b948">
+                    Alive
                 </StyledTag>
-                ) : (
-                <StyledTag color="error">
-                    Morto/Desconhecido
+                ) : status === 'Dead' ?(
+                <StyledTag color="#1b1b1b">
+                    Dead
                 </StyledTag>
+                ) : 
+                (
+                  <StyledTag color="#a89c96">
+                    Unknown
+                  </StyledTag>
                 ),
                 
           },
@@ -71,15 +110,27 @@ type CharactersInfoProps = {
             align: 'center' as const,
             render: (gender: string) =>
                 gender === 'Male' ? (
-                <StyledTag color="#29e973">
-                    Másculino
+                <StyledTag color="#3700ff">
+                    Male
                 </StyledTag>
                 ) : (
-                <StyledTag color='#e20f91' >
-                    Feminino
+                <StyledTag color='#e0299a' >
+                    Female
                 </StyledTag>
                 ),
           },
+          {
+            title: 'Favoritar',
+            align: 'center' as const,
+            width: '10%',
+            render: (data: any) => {
+                
+              return (
+                <button style={{background: 'transparent', border:0, cursor: 'pointer'}} onClick={() => handleAddCharacterToFavorite(data)}>
+                    {data.isFavorite ? <StarFilled /> : <StarOutlined/>}</button>
+              );
+            },
+        }
     ]
     const styleConfig: React.CSSProperties = {
         color: 'dodgerblue',
@@ -102,7 +153,6 @@ type CharactersInfoProps = {
         if(page.current){
             setPage(page.current)
         }
-        console.log(page)
     }
 
     return(

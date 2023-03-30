@@ -10,11 +10,11 @@ export const addCharacterToFavorite = (favoriteItem : IFavoriteCharacterState) =
     }
 }
 
-export function deleteCaracterFromList(idCaracter : number){
+export function deleteCaracterFromList(character : IFavoriteCharacterState){
     return {
         type:'DELETE_CHARACTER_FROM_FAVORITE_LIST',
         payload : {
-            idCaracter,
+            character,
         }
     }
 }

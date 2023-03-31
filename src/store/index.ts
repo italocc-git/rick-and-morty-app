@@ -1,5 +1,5 @@
 import {createStore} from 'redux'
-import { ICharacterState } from './modules/character/type'
+import { ICharacterState } from './modules/characters/type'
 import rootReducer from './modules/rootReducer'
 
 export interface IState {

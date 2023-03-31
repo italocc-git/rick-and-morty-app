@@ -1,15 +1,15 @@
 import api from '@/services/api';
 import {useDispatch } from 'react-redux'
-import { IFavoriteCharacterState } from '@/store/modules/character/type'
+import { IFavoriteCharacterState } from '@/store/modules/characters/type'
 import { useCallback} from 'react'
-import { addCharacterToFavorite, deleteCaracterFromList } from '@/store/modules/character/actions'
+import { addCharacterToFavorite, deleteCaracterFromList } from '@/store/modules/characters/actions'
 import {
     LeftSquareOutlined,
     RightSquareOutlined,
-    StarOutlined,
-    StarFilled
+   
     
   } from '@ant-design/icons';
+  import {Star} from 'phosphor-react'
 import {  TablePaginationConfig } from 'antd';
 import {useState , useEffect} from 'react'
 
@@ -19,6 +19,7 @@ import {
   } from './styles';
 import Image from 'next/image';
 import Link from 'next/link'
+import { GetRowKey } from 'antd/es/table/interface';
 
 type TableProps = {
     endPointLink: string
@@ -65,6 +66,7 @@ type CharactersInfoProps = {
             title: 'Avatar',
             dataIndex: 'image',
             align: 'center' as const,
+            
             render: (imageUrl: string  , record : any) => 
               <Image src={imageUrl} width={48} height={48} alt={record.name} />
           },
@@ -120,14 +122,14 @@ type CharactersInfoProps = {
                 ),
           },
           {
-            title: 'Favoritar',
+            title: 'Favorito?',
             align: 'center' as const,
             width: '10%',
             render: (data: any) => {
                 
               return (
                 <button style={{background: 'transparent', border:0, cursor: 'pointer'}} onClick={() => handleAddCharacterToFavorite(data)}>
-                    {data.isFavorite ? <StarFilled /> : <StarOutlined/>}</button>
+                    {data.isFavorite ? <Star weight="bold" color='#ffe234' /> : <Star />}</button>
               );
             },
         }
@@ -160,6 +162,7 @@ type CharactersInfoProps = {
         onChange= {handlePaginationChange}
         pagination={paginationConfig} columns={columns} 
         tableLayout="auto" 
+        rowKey={(data : any) => data.id}
         locale={{ emptyText: 'Nenhum personagem encontrado' }} />
     )
   }

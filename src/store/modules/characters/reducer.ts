@@ -5,7 +5,7 @@ const INITIAL_STATE : ICharacterState = {
     charactersItems: []
 }
 
-const character : Reducer<ICharacterState> = (state = INITIAL_STATE , action) => {
+const characters : Reducer<ICharacterState> = (state = INITIAL_STATE , action) => {
     switch(action.type) {
         case 'ADD_CHARACTER_TO_FAVORITE_LIST' : {
             const {favoriteItem} = action.payload
@@ -34,4 +34,4 @@ const character : Reducer<ICharacterState> = (state = INITIAL_STATE , action) =>
     }
 }
 
-export { character }
+export { characters }

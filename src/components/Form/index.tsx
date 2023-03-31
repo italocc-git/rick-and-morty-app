@@ -27,28 +27,28 @@ export const Form = ({setFilter} : FormProps ) => {
             autoComplete="off"
         >
             <Row gutter={24} style={{width:'100%', margin:'0px 15px'}} >
-                <Col span={8}>
+                <Col span={6}>
                 <FormAntd.Item
                     label="Nome do Personagem"
                     name="name"
                     
                     >
-                    <Input />
+                    <Input placeholder='Fill with a character to filter'/>
                 </FormAntd.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={6}>
                 <FormAntd.Item
                     label="Espécie"
                     name="species"
                     
                     >
-                    <Select >
-                        <Option value="Human">Humano</Option>
-                        <Option value="Alien">Alienígena</Option>
+                    <Select placeholder='Select a specie to filter'>
+                        <Option value="Human">Human</Option>
+                        <Option value="Alien">Alien</Option>
                         <Option value="Humanoid">Humanoid</Option>
-                        <Option value="unknown">Desconhecido</Option>
+                        <Option value="unknown">Unknown</Option>
                         <Option value="Poopybutthole">Poopybutthole</Option>
-                        <Option value="Mythological Creature">Criatura Mitológica</Option>
+                        <Option value="Mythological Creature">Mythological Creature</Option>
                         <Option value="Animal">Animal</Option>
                         <Option value="Robot">Robot</Option>
                         <Option value="Cronenberg">Cronenberg</Option>
@@ -57,22 +57,31 @@ export const Form = ({setFilter} : FormProps ) => {
                     </Select>
                 </FormAntd.Item>
                 </Col>
-                <Col span={2}>
+                <Col span={4}>
                     <FormAntd.Item
                         label="Status"
                         name="status"
                         
                         >
-                        <Radio />
+                        <Radio.Group style={{display: 'flex', gap:'.3rem'}} buttonStyle='solid'>
+                                <Radio.Button value="Alive">Alive</Radio.Button>
+                                <Radio.Button value="Dead">Dead</Radio.Button>
+                                <Radio.Button value="unknown">Unknown</Radio.Button>
+                            </Radio.Group>
                     </FormAntd.Item>
                 </Col>
-                <Col span={2}>
+                <Col span={4}>
                     <FormAntd.Item
                         label="Gênero"
                         name="gender"
                         
                         >
-                        <Radio />
+                            <Radio.Group style={{display: 'flex', gap:'.3rem'}} buttonStyle='solid'>
+                                <Radio.Button value="Male">Male</Radio.Button>
+                                <Radio.Button value="Female">Female</Radio.Button>
+                                <Radio.Button value="Unknown">Unknown</Radio.Button>
+                            </Radio.Group>
+                        
                     </FormAntd.Item>
                 </Col>
                 <Col span={24}>

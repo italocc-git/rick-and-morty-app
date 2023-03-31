@@ -1,22 +1,37 @@
-import {
-    StarFilled
-    
-  } from '@ant-design/icons';
+import {HeaderComponent} from './styles'
+import logoImg from '@/assets/rick-and-morty-logo.png'
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
+import Image from 'next/image'
+import {useRouter} from 'next/router'
+import { Star } from 'phosphor-react';
+import { FormEvent } from 'react';
 type HeaderProps = {
-    title: string;
+    title?: string;
 }
 
 export const Header = ({title} : HeaderProps) => {
-    const {character} = useSelector(state => state) as any
+    const {characters} = useSelector(state => state) as any
+
+    const router = useRouter()
+
+    const handleRedirectToFavorites = (e : FormEvent) => {
+        e.preventDefault()
+        router.push('/favorites-list')
+    }
 
     return(
-        <div style={{padding:'0px 25px', display:'flex', alignItems:'center' , justifyContent: 'space-between'}}>
+        <HeaderComponent>
+            <Link href='/'>
+                <Image src={logoImg.src} alt="logo-img" width={128} height={128}  />
+            </Link>
             <h1>{title}</h1>
-            <div style={{display:'flex', gap:'1rem'}}>
-                <span>Favoritos : {character.charactersItems.length}</span>
-                <StarFilled/>
-            </div>
-        </div>
+            <button onClick={handleRedirectToFavorites} className='item-add-to-favorite' >
+                <Star size={40} weight="bold" />
+                <span>{characters.charactersItems.length}</span>
+              
+            </button>
+           
+        </HeaderComponent>
     )
 }

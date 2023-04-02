@@ -1,5 +1,3 @@
 export const Input = () => {
-    return(
-        <input type="text" name="" id="" />
-    )
+  return <input type="text" name="" id="" />
 }

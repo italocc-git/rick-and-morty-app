@@ -1,76 +1,210 @@
 import api from '@/services/api'
-import {useRouter} from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
-import {Card} from 'antd'
-import Image from 'next/image'
-import Link from 'next/link'
-import {GenderMale , GenderFemale, GenderNeuter,  Star} from 'phosphor-react'
-import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
+import { useEffect, useState, useCallback } from 'react'
+import loadingImg from '@/assets/loading.gif'
+import {
+  addCharacterToFavorite,
+  deleteCaracterFromList,
+} from '@/store/modules/characters/actions'
+import {
+  ArrowLeft,
+  GenderMale,
+  GenderFemale,
+  GenderNeuter,
+  Star,
+} from 'phosphor-react'
 import Head from 'next/head'
 import { Header } from '@/components/Header'
-import { CharacterContainer , ImageContainer, CharacterDetails, CharacterDetailsHeader, CharacterDetailsSpecifications } from './styles'
-type Character = {
-    name: string;
-    status: string;
-    species: string;
-    gender: string;
-    image: string;
-    isFavorite:boolean;
+import {
+  CharacterContainer,
+  CharacterDetailsContent,
+  ImageContainer,
+  LinkContainer,
+  CharacterDetails,
+  CharacterDetailsHeader,
+  CharacterDetailsInformations,
+} from './styles'
+import { useDispatch, useSelector } from 'react-redux'
+
+type CharacterType = {
+  id: number
+  name: string
+  status: string
+  species: string
+  gender: string
+  image: string
+  isFavorite: boolean
+  type: string
+  origin: {
+    name: string
+    url: string
+  }
+  location: {
+    name: string
+    url: string
+  }
+  episode: string[]
 }
 
+/* type Episode = {
+  name: string
+  air_date: string
+  episode: string
+} */
 
 export default function Character() {
-    const {query} = useRouter()
-    const {id} = query
+  const { query } = useRouter()
+  const { id } = query
+  const [character, setCharacter] = useState<CharacterType>({} as CharacterType)
+  const [isFavorite, setIsFavorite] = useState(false)
+  const { characters } = useSelector((state) => state) as any
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  /* const [episodes, setEpisodes] = useState<Episode>({} as Episode) */
 
-    const [character, setCharacter] = useState<Character>( {} as Character)
+  const loadCharacterData = useCallback(() => {
+    if (id) {
+      api
+        .get(`character/${id}`)
+        .then((response) => {
+          const characterData = response.data
 
-    const { Meta } = Card;
-     useEffect(() => {
-        api.get(`character/${id}`).then(response => setCharacter(response.data))
-    },[id]) 
+          const characterFavorited = characters.charactersItems.some(
+            (favoriteItem: any) => favoriteItem.id === characterData.id,
+          )
 
-    const handleAddCharacterToFavorite = useCallback((character : any) => {
+          setCharacter(characterData)
+          setIsFavorite(characterFavorited)
+        })
+        .catch(() => alert('Some problem with request of character data'))
+    }
+  }, [id, setIsFavorite, setCharacter, characters.charactersItems])
 
-       /*  if(character.isFavorite){
-          dispatch(deleteCaracterFromList(character))
-        }
-        else {
-          dispatch(addCharacterToFavorite(character))
-        }
-  
-        
-        
-        const alteredListOfCharacters = characters.map(item => item.id === character.id ? {...character, isFavorite: !character.isFavorite} : item)
-        setCaracters(alteredListOfCharacters) */
-    }, [])
+  useEffect(() => {
+    loadCharacterData()
+  }, [loadCharacterData])
 
-    return (
-        <>
-        
-        <Head><title>{character.name} | R & M</title></Head>
-        <Header title={`Character ${character.name}`}/>
-        
-        <CharacterContainer>
-            <ImageContainer>
-            <Image src={character.image} width={520} height={480} alt={character.name} />
-            </ImageContainer>
-            <CharacterDetails>
-                <CharacterDetailsHeader>
-                    <h1>{character.name}</h1>
-                    <Star size={28} weight='bold' />
-                </CharacterDetailsHeader>
-                <CharacterDetailsSpecifications status={'Alive'}>
-                    <span>{character.gender === 'Male' ? <GenderMale/> : character.gender === 'Female' ? <GenderFemale/> : <GenderNeuter/>}</span> |
-                    <span>{character.species}</span> |
-                    <span>{character.status}</span>
-                </CharacterDetailsSpecifications>
-                
-            </CharacterDetails>
-        </CharacterContainer>
-       
-        </>
-    )
+  const handleAddCharacterToFavorite = useCallback(
+    (isFavorite: boolean) => {
+      if (isFavorite) {
+        dispatch(deleteCaracterFromList(character))
+        setIsFavorite(false)
+      } else {
+        dispatch(addCharacterToFavorite(character))
+        setIsFavorite(true)
+      }
+    },
+    [dispatch, character],
+  )
+
+  return (
+    <>
+      <Head>
+        <title>{character.name} | R & M</title>
+      </Head>
+      <Header title={`Character ${character.name}`} />
+
+      <CharacterContainer>
+        <ImageContainer
+          src={character.image ?? loadingImg}
+          width={350}
+          height={350}
+          alt={character.name ?? ''}
+          loading="eager"
+        />
+        <LinkContainer href="/">
+          <ArrowLeft size={32} />
+          <span>Back</span>
+        </LinkContainer>
+        <CharacterDetails>
+          <CharacterDetailsHeader>
+            <h1>{character.name}</h1>
+            {isFavorite ? (
+              <Star
+                size={28}
+                weight="fill"
+                onClick={() => handleAddCharacterToFavorite(isFavorite)}
+              />
+            ) : (
+              <Star
+                size={28}
+                weight="bold"
+                onClick={() => handleAddCharacterToFavorite(isFavorite)}
+              />
+            )}
+          </CharacterDetailsHeader>
+          <CharacterDetailsContent>
+            <CharacterDetailsInformations status={'Alive'}>
+              <h1>Informations</h1>
+              <div>
+                <div className="information-style">
+                  <h2>Gender</h2>
+                  <span>
+                    {character.gender === 'Male' ? (
+                      <GenderMale />
+                    ) : character.gender === 'Female' ? (
+                      <GenderFemale />
+                    ) : (
+                      <GenderNeuter />
+                    )}
+                  </span>
+                </div>
+                <div className="information-style">
+                  <h2>Status</h2>
+                  <span>{character.status}</span>
+                </div>
+                <div className="information-style">
+                  <h2>Specie</h2>
+                  <span>{character.species}</span>
+                </div>
+                <div className="information-style">
+                  <h2>Origin</h2>
+                  <span>{character.origin?.name}</span>
+                </div>
+                <div className="information-style">
+                  <h2>Type</h2>
+                  <span>
+                    {character.type === '' ? 'unknown' : character.type}
+                  </span>
+                </div>
+                <div className="information-style">
+                  <h2>Location</h2>
+                  <span>{character.location?.name}</span>
+                </div>
+              </div>
+            </CharacterDetailsInformations>
+            <CharacterDetailsInformations>
+              <h1>Episodes</h1>
+              {/*  <div>
+                                <div className='information-style'>
+                                    <h2>Gender</h2>
+                                    <span>{character.gender === 'Male' ? <GenderMale/> : character.gender === 'Female' ? <GenderFemale/> : <GenderNeuter/>}</span>    
+                                </div>
+                                <div  className='information-style'>
+                                    <h2>Status</h2>
+                                    <span>{character.status}</span>
+                                </div>
+                                <div  className='information-style'>
+                                    <h2>Specie</h2>
+                                    <span>{character.species}</span>
+                                </div> 
+                                <div  className='information-style'>
+                                    <h2>Origin</h2>
+                                    <span>{character.origin.name}</span>
+                                </div>
+                                <div  className='information-style'>
+                                    <h2>Type</h2>
+                                    <span>{character.type === '' ? 'unknown' : character.type}</span>
+                                </div>
+                                <div  className='information-style'>
+                                    <h2>Location</h2>
+                                    <span>{character.location.name}</span>
+                                </div>  
+                            </div> */}
+            </CharacterDetailsInformations>
+          </CharacterDetailsContent>
+        </CharacterDetails>
+      </CharacterContainer>
+    </>
+  )
 }

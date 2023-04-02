@@ -1,24 +1,27 @@
+import { useEffect, ReactNode } from 'react'
 
+import { useDispatch } from 'react-redux'
+import { loadFavoriteList } from '@/store/modules/characters/actions'
+import { useRouter } from 'next/router'
 
-import { Form } from '@/components/Form'
-import { Header } from '@/components/Header'
+interface MainProps {
+  children: ReactNode
+}
 
-import { Table } from '@/components/Table'
-import Head from 'next/head'
-export default function CharacterList(){
+export default function Main({ children }: MainProps) {
+  const dispatch = useDispatch()
+  const router = useRouter()
+  useEffect(() => {
+    /* const charactersFavorites = parseCookies()?.CHARACTERS_FAVORITE
+      ? JSON.parse(parseCookies().CHARACTERS_FAVORITE)
+      : null */
+    const charactersFavorites = localStorage.getItem('@user-dev/favorite-list')
+    const favoriteListData = charactersFavorites
+      ? JSON.parse(charactersFavorites)
+      : {}
+    dispatch(loadFavoriteList(favoriteListData))
+    router.push('/character-list')
+  }, [])
 
-    return(
-        <>
-            <Head>
-                <title>List of Characters | R & M</title>
-            </Head>
-            <Header title='Favorite Characters' />
-            
-            
-            <Form/>
-
-
-            <Table endPointLink='character' />
-        </>
-    )
+  return <>{children}</>
 }

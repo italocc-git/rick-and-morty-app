@@ -11,9 +11,12 @@ export default createGlobalStyle`
   }
 
   body {
-    /* background : #312e38; */
-    /* color: white; */
+     background : #F5F8FA; 
+     color: #3C64B1; 
+     max-width: 1320px;
+     margin : 0 auto ;
     -webkit-font-smoothing: antialiased;
+    
   }
   body,
   button,

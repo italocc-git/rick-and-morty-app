@@ -1,96 +1,116 @@
-import { Button, Select , Form as FormAntd, Input, Radio } from 'antd';
-import { Col, Row } from 'antd';
+import { IFilterTypes } from '@/store/modules/characters/type'
+import { Button, Select, Form as FormAntd, Input, Radio, Col, Row } from 'antd'
+
 interface FormProps {
-    setFilter ?: (filter: string) => void;
+  setFilter: (filter: IFilterTypes) => void
 }
 
-export const Form = ({setFilter} : FormProps ) => {
+export const Form = ({ setFilter }: FormProps) => {
+  const [form] = FormAntd.useForm()
 
-        const onFinish = (values: any) => {
-            console.log('Success:', values);
-        };
+  const filterInitialValues = {
+    name: '',
+    gender: '',
+    species: '',
+    status: '',
+  } as IFilterTypes
 
-        const onFinishFailed = (errorInfo: any) => {
-            console.log('Failed:', errorInfo);
-        };
-        const {Option} = Select
+  const onFinish = (values: IFilterTypes) => {
+    const { name, species, status, gender } = values
+    console.log(values)
+    setFilter({
+      name: name ?? '',
+      species: species ?? '',
+      status: status ?? '',
+      gender: gender ?? '',
+    })
+  }
 
-    return(
-        
-            
-            <FormAntd
-            name="form"
-            style={{  display: 'flex', justifyContent: 'space-between' }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-        >
-            <Row gutter={24} style={{width:'100%', margin:'0px 15px'}} >
-                <Col span={6}>
-                <FormAntd.Item
-                    label="Nome do Personagem"
-                    name="name"
-                    
-                    >
-                    <Input placeholder='Fill with a character to filter'/>
-                </FormAntd.Item>
-                </Col>
-                <Col span={6}>
-                <FormAntd.Item
-                    label="Espécie"
-                    name="species"
-                    
-                    >
-                    <Select placeholder='Select a specie to filter'>
-                        <Option value="Human">Human</Option>
-                        <Option value="Alien">Alien</Option>
-                        <Option value="Humanoid">Humanoid</Option>
-                        <Option value="unknown">Unknown</Option>
-                        <Option value="Poopybutthole">Poopybutthole</Option>
-                        <Option value="Mythological Creature">Mythological Creature</Option>
-                        <Option value="Animal">Animal</Option>
-                        <Option value="Robot">Robot</Option>
-                        <Option value="Cronenberg">Cronenberg</Option>
-                        <Option value="Disease">Disease</Option>
-                        
-                    </Select>
-                </FormAntd.Item>
-                </Col>
-                <Col span={4}>
-                    <FormAntd.Item
-                        label="Status"
-                        name="status"
-                        
-                        >
-                        <Radio.Group style={{display: 'flex', gap:'.3rem'}} buttonStyle='solid'>
-                                <Radio.Button value="Alive">Alive</Radio.Button>
-                                <Radio.Button value="Dead">Dead</Radio.Button>
-                                <Radio.Button value="unknown">Unknown</Radio.Button>
-                            </Radio.Group>
-                    </FormAntd.Item>
-                </Col>
-                <Col span={4}>
-                    <FormAntd.Item
-                        label="Gênero"
-                        name="gender"
-                        
-                        >
-                            <Radio.Group style={{display: 'flex', gap:'.3rem'}} buttonStyle='solid'>
-                                <Radio.Button value="Male">Male</Radio.Button>
-                                <Radio.Button value="Female">Female</Radio.Button>
-                                <Radio.Button value="Unknown">Unknown</Radio.Button>
-                            </Radio.Group>
-                        
-                    </FormAntd.Item>
-                </Col>
-                <Col span={24}>
-                    <FormAntd.Item>
-                        <Button type="primary" htmlType='submit'>Filtrar</Button>
-                    </FormAntd.Item>
-                </Col>
-            </Row>
-        </FormAntd>
-        
-    )
+  const onReset = () => {
+    form.resetFields()
+    form.submit()
+  }
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo)
+  }
+  const { Option } = Select
+
+  return (
+    <FormAntd
+      name="form"
+      form={form}
+      style={{ display: 'flex', justifyContent: 'space-between' }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="on"
+      initialValues={filterInitialValues}
+    >
+      <Row gutter={16} style={{ width: '100vw' }}>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <FormAntd.Item label="Character Name" name="name">
+            <Input placeholder="Fill with a character name to filter" />
+          </FormAntd.Item>
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <FormAntd.Item label="Specie" name="species">
+            <Select placeholder="Select a specie to filter" allowClear>
+              <Option value="">All</Option>
+              <Option value="Human">Human</Option>
+              <Option value="Alien">Alien</Option>
+              <Option value="Humanoid">Humanoid</Option>
+              <Option value="unknown">Unknown</Option>
+              <Option value="Poopybutthole">Poopybutthole</Option>
+              <Option value="Mythological Creature">
+                Mythological Creature
+              </Option>
+              <Option value="Animal">Animal</Option>
+              <Option value="Robot">Robot</Option>
+              <Option value="Cronenberg">Cronenberg</Option>
+              <Option value="Disease">Disease</Option>
+            </Select>
+          </FormAntd.Item>
+        </Col>
+        <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24}>
+          <FormAntd.Item label="Status" name="status">
+            <Radio.Group
+              style={{ display: 'flex', gap: '.1rem' }}
+              buttonStyle="solid"
+            >
+              <Radio.Button value="Alive">Alive</Radio.Button>
+              <Radio.Button value="Dead">Dead</Radio.Button>
+              <Radio.Button value="unknown">Unknown</Radio.Button>
+            </Radio.Group>
+          </FormAntd.Item>
+        </Col>
+        <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24}>
+          <FormAntd.Item label="Gender" name="gender">
+            <Radio.Group
+              style={{ display: 'flex', gap: '.1rem' }}
+              buttonStyle="solid"
+            >
+              <Radio.Button value="Male">Male</Radio.Button>
+              <Radio.Button value="Female">Female</Radio.Button>
+              <Radio.Button value="Unknown">Unknown</Radio.Button>
+            </Radio.Group>
+          </FormAntd.Item>
+        </Col>
+        <Col xxl={8} xl={8} lg={0} md={0} sm={0} xs={0}></Col>
+        <Col xxl={2} xl={2} lg={2} md={3} sm={4} xs={4}>
+          <FormAntd.Item>
+            <Button type="default" onClick={onReset} htmlType="button">
+              Reset
+            </Button>
+          </FormAntd.Item>
+        </Col>
+        <Col xxl={2} xl={2} lg={2} md={3} sm={4} xs={4}>
+          <FormAntd.Item>
+            <Button type="primary" htmlType="submit">
+              Filter
+            </Button>
+          </FormAntd.Item>
+        </Col>
+      </Row>
+    </FormAntd>
+  )
 }

@@ -7,3 +7,10 @@ export interface IFavoriteCharacterState {
 export interface ICharacterState {
     charactersItems : IFavoriteCharacterState[]
 }
+
+export interface IFilterTypes {
+    name : string;
+    species : string;
+    status: string;
+    gender : string;
+}

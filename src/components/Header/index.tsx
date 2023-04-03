@@ -6,13 +6,13 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Star } from 'phosphor-react'
 import { FormEvent } from 'react'
+import { ICharacterState } from '@/types'
 type HeaderProps = {
   title?: string
 }
 
 export const Header = ({ title }: HeaderProps) => {
-  const { characters } = useSelector((state) => state) as any
-
+  const { characters } = useSelector((state) => state) as ICharacterState
   const router = useRouter()
 
   const handleRedirectToFavorites = (e: FormEvent) => {

@@ -1,4 +1,4 @@
-import { IFilterTypes } from '@/store/modules/characters/type'
+import { IFilterTypes } from '@/types'
 import { Button, Select, Form as FormAntd, Input, Radio, Col, Row } from 'antd'
 
 interface FormProps {

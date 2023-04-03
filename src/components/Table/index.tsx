@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { IFavoriteCharacterState } from '@/store/modules/characters/type'
 import React, { useCallback } from 'react'
 import {
   addCharacterToFavorite,
@@ -12,15 +11,21 @@ import { Spin, TablePaginationConfig } from 'antd'
 import { StyledTable, StyledTag } from './styles'
 import Image from 'next/image'
 import Link from 'next/link'
+import {
+  TablePagination,
+  ICharacterState,
+  ICharacterStateItem,
+  PaginationInfoProps,
+} from '@/types'
 
 type TableProps = {
   endPointLink?: string
   loading: boolean
-  page: any
-  setPage: (page: any) => void
-  paginationInfo: any
-  characters: IFavoriteCharacterState[]
-  setCharacters: (character: IFavoriteCharacterState[]) => void
+  page: TablePagination
+  setPage: (page: TablePagination) => void
+  paginationInfo: PaginationInfoProps
+  characters: ICharacterStateItem[]
+  setCharacters: (character: ICharacterStateItem[]) => void
 }
 
 export const Table = ({
@@ -33,13 +38,13 @@ export const Table = ({
 }: TableProps) => {
   const dispatch = useDispatch()
 
-  const globalState = useSelector((state) => state) as any
+  const globalState = useSelector((state) => state) as ICharacterState
 
   const handleAddCharacterToFavorite = useCallback(
-    (character: IFavoriteCharacterState) => {
+    (character: ICharacterStateItem) => {
       const isAlreadyInFavoriteList =
         globalState.characters.charactersItems.find(
-          (characterState: IFavoriteCharacterState) =>
+          (characterState: ICharacterStateItem) =>
             characterState.id === character.id,
         )
 
@@ -154,16 +159,18 @@ export const Table = ({
     total: page.pageSize * paginationInfo.pages,
     showSizeChanger: false,
     showTotal: (total: any, range: any) => {
-      return `Exibindo ${range[0]}-${range[1]} de ${total} registros`
+      return `Displaying ${range[0]}-${range[1]} of ${total} records`
     },
   }
 
   const handlePaginationChange = (page: TablePaginationConfig) => {
-    if (page.current) {
+    const { current, pageSize, total } = page
+    if (current) {
       console.log(page)
       setPage({
-        ...page,
-        current: page.current,
+        pageSize: pageSize ?? 20,
+        total: total ?? 1,
+        current,
       })
     }
   }
@@ -191,7 +198,7 @@ export const Table = ({
       columns={columns}
       tableLayout="auto"
       rowKey={(data: any) => data.id}
-      locale={{ emptyText: 'Nenhum personagem encontrado' }}
+      locale={{ emptyText: 'No one character founded' }}
     />
   )
 }

@@ -6,8 +6,9 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { ArrowLeft } from 'phosphor-react'
 import { LinkContainer } from './styles'
+import { ICharacterState } from '@/types'
 export default function FavoritesList() {
-  const { characters } = useSelector((state) => state) as any
+  const { characters } = useSelector((state) => state) as ICharacterState
   const { Meta } = Card
   return (
     <>
@@ -27,7 +28,7 @@ export default function FavoritesList() {
         </Row>
         <Row gutter={[16, 16]} justify="center">
           {characters.charactersItems.length > 0 ? (
-            characters.charactersItems.map((character: any) => (
+            characters.charactersItems.map((character) => (
               <Col
                 key={character.id}
                 xxl={6}

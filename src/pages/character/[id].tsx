@@ -25,6 +25,7 @@ import {
   CharacterDetailsInformations,
 } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
+import { getNotification } from '@/components/Notification'
 
 type CharacterType = {
   id: number
@@ -76,7 +77,12 @@ export default function Character() {
           setCharacter(characterData)
           setIsFavorite(characterFavorited)
         })
-        .catch(() => alert('Some problem with request of character data'))
+        .catch(() =>
+          getNotification(
+            'Some problem with request of character data',
+            'Failed',
+          ),
+        )
     }
   }, [id, setIsFavorite, setCharacter, characters.charactersItems])
 
@@ -88,9 +94,11 @@ export default function Character() {
     (isFavorite: boolean) => {
       if (isFavorite) {
         dispatch(deleteCaracterFromList(character))
+        getNotification('Character removed in your Favorite List', 'Success')
         setIsFavorite(false)
       } else {
         dispatch(addCharacterToFavorite(character))
+        getNotification('Character added in your Favorite List', 'Success')
         setIsFavorite(true)
       }
     },

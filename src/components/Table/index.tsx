@@ -7,7 +7,7 @@ import {
 import { LeftSquareOutlined, RightSquareOutlined } from '@ant-design/icons'
 import { Star } from 'phosphor-react'
 import { Spin, TablePaginationConfig } from 'antd'
-
+import { getNotification } from '../Notification'
 import { StyledTable, StyledTag } from './styles'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -49,14 +49,20 @@ export const Table = ({
         )
 
       if (!character.isFavorite && isAlreadyInFavoriteList) {
-        alert(`${character.name} is already in Favorite List, try another one`)
+        getNotification(
+          'Character is already in Favorite List , try another one',
+          'Failed',
+        )
+
         return
       }
 
       if (character.isFavorite) {
         dispatch(deleteCaracterFromList(character))
+        getNotification('Character removed in your Favorite List', 'Success')
       } else {
         dispatch(addCharacterToFavorite(character))
+        getNotification('Character added in your Favorite List', 'Success')
       }
 
       const alteredListOfCharacters = characters.map((item) =>
@@ -64,6 +70,7 @@ export const Table = ({
           ? { ...character, isFavorite: !character.isFavorite }
           : item,
       )
+
       setCharacters(alteredListOfCharacters)
     },
     [dispatch, characters, setCharacters, globalState],

@@ -1,11 +1,12 @@
-import { IFilterTypes } from '@/types'
+import { IFilterTypes, TablePagination } from '@/types'
 import { Button, Select, Form as FormAntd, Input, Radio, Col, Row } from 'antd'
 
 interface FormProps {
   setFilter: (filter: IFilterTypes) => void
+  setPage: (page: (prevState: TablePagination) => TablePagination) => void
 }
 
-export const Form = ({ setFilter }: FormProps) => {
+export const Form = ({ setFilter, setPage }: FormProps) => {
   const [form] = FormAntd.useForm()
 
   const filterInitialValues = {
@@ -17,6 +18,7 @@ export const Form = ({ setFilter }: FormProps) => {
 
   const onFinish = (values: IFilterTypes) => {
     const { name, species, status, gender } = values
+
     setFilter({
       name: name ?? '',
       species: species ?? '',
@@ -27,6 +29,13 @@ export const Form = ({ setFilter }: FormProps) => {
 
   const onReset = () => {
     form.resetFields()
+    setPage((prevState: TablePagination) => {
+      return {
+        ...prevState,
+        current: 1,
+      }
+    })
+
     form.submit()
   }
 
@@ -39,15 +48,19 @@ export const Form = ({ setFilter }: FormProps) => {
     <FormAntd
       name="form"
       form={form}
-      style={{ display: 'flex', justifyContent: 'space-between' }}
+      style={{ display: 'flex', justifyContent: 'space-around' }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="on"
       initialValues={filterInitialValues}
     >
-      <Row gutter={16} style={{ width: '100vw' }}>
+      <Row gutter={32} style={{ width: '100vw' }}>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <FormAntd.Item label="Character Name" name="name">
+          <FormAntd.Item
+            label="Character Name"
+            name="name"
+            rules={[{ message: 'Only 8 letters', max: 8 }]}
+          >
             <Input placeholder="Fill with a character name to filter" />
           </FormAntd.Item>
         </Col>

@@ -1,16 +1,16 @@
 export interface IFavoriteCharacterState {
-    id: number;
-    name: string;
-    isFavorite ?: boolean
+  id: number
+  name: string
+  isFavorite?: boolean
 }
 
 export interface ICharacterState {
-    charactersItems : IFavoriteCharacterState[]
+  charactersItems: IFavoriteCharacterState[]
 }
 
 export interface IFilterTypes {
-    name : string;
-    species : string;
-    status: string;
-    gender : string;
+  name: string
+  species: string
+  status: string
+  gender: string
 }

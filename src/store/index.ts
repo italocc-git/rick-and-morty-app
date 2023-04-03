@@ -10,9 +10,4 @@ export interface IState {
 
 const store = createStore(rootReducer)
 
-/* store.subscribe(() => {
-  console.log(store.getState())
-  saveState(store.getState())
-}) */
-
 export { store }

@@ -11,10 +11,8 @@ interface MainProps {
 export default function Main({ children }: MainProps) {
   const dispatch = useDispatch()
   const router = useRouter()
+
   useEffect(() => {
-    /* const charactersFavorites = parseCookies()?.CHARACTERS_FAVORITE
-      ? JSON.parse(parseCookies().CHARACTERS_FAVORITE)
-      : null */
     const charactersFavorites = localStorage.getItem('@user-dev/favorite-list')
     const favoriteListData = charactersFavorites
       ? JSON.parse(charactersFavorites)

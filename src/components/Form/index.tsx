@@ -17,7 +17,6 @@ export const Form = ({ setFilter }: FormProps) => {
 
   const onFinish = (values: IFilterTypes) => {
     const { name, species, status, gender } = values
-    console.log(values)
     setFilter({
       name: name ?? '',
       species: species ?? '',

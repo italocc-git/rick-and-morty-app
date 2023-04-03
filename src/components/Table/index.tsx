@@ -22,10 +22,6 @@ type TableProps = {
   characters: IFavoriteCharacterState[]
   setCharacters: (character: IFavoriteCharacterState[]) => void
 }
-/* type CharactersInfoProps = {
-  count: number
-  pages: number
-} */
 
 export const Table = ({
   characters,
@@ -38,9 +34,6 @@ export const Table = ({
   const dispatch = useDispatch()
 
   const globalState = useSelector((state) => state) as any
-
-  /*  const [charactersInfo, setCaractersInfo] = useState<CharactersInfoProps>({} as CharactersInfoProps)
-   */
 
   const handleAddCharacterToFavorite = useCallback(
     (character: IFavoriteCharacterState) => {
@@ -90,7 +83,7 @@ export const Table = ({
     {
       title: 'Nome',
       dataIndex: 'name',
-      responsive: ['sm'],
+      responsive: ['sm'] as any,
       align: 'center' as const,
       render: (name: string, character: any) => {
         return <Link href={`/character/${character.id}`}>{name}</Link>

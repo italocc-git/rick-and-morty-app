@@ -1,25 +1,15 @@
+import { IFavoriteCharacterState } from '@/types'
+import { saveState } from '@/utils/localStorage'
 import { Reducer } from 'redux'
-import { ICharacterState } from './type'
 
-/* import { produce } from 'immer' */
-
-const INITIAL_STATE: ICharacterState = {
+const INITIAL_STATE: IFavoriteCharacterState = {
   charactersItems: [],
 }
 
-/* const INITIAL_STATE_COOKIE = parseCookies()?.CHARACTERS_FAVORITE
-  ? JSON.parse(parseCookies().CHARACTERS_FAVORITE)
-  : {}
-INITIAL_STATE = INITIAL_STATE_COOKIE
-  ? JSON.parse(INITIAL_STATE_COOKIE)
-  : INITIAL_STATE */
-
-/* const cookies = parseCookies()
-INITIAL_STATE = cookies.CHARACTERS_FAVORITE
-  ? JSON.parse(cookies.CHARACTERS_FAVORITE)
-  : INITIAL_STATE */
-
-const characters: Reducer<any> = (state = INITIAL_STATE, action) => {
+const characters: Reducer<IFavoriteCharacterState> = (
+  state = INITIAL_STATE,
+  action,
+) => {
   switch (action.type) {
     case 'LOAD_FAVORITE_LIST': {
       const { favoriteList } = action.payload
@@ -29,15 +19,10 @@ const characters: Reducer<any> = (state = INITIAL_STATE, action) => {
 
     case 'ADD_CHARACTER_TO_FAVORITE_LIST': {
       const { favoriteItem } = action.payload
-      /* return produce(state, (draft) => {
-        draft.charactersItems.push({
-          ...favoriteItem,
-          isFavorite: true,
-        })
-      }) */
-      let newStateList: any
 
-      if (state.length === 0) {
+      let newStateList: IFavoriteCharacterState
+
+      if (state.charactersItems.length === 0) {
         newStateList = {
           charactersItems: [
             {
@@ -59,16 +44,10 @@ const characters: Reducer<any> = (state = INITIAL_STATE, action) => {
             },
           ],
         }
+        console.log(newStateList)
       }
-      console.log(newStateList)
-      /* setCookie(null, 'CHARACTERS_FAVORITE', JSON.stringify(newStateList), {
-        maxAge: 86400 * 7,
-        path: '/',
-      }) */
-      localStorage.setItem(
-        '@user-dev/favorite-list',
-        JSON.stringify(newStateList),
-      )
+      saveState(process.env.NEXT_PUBLIC_LOCAL_STORAGE_KEY ?? '', newStateList)
+
       return newStateList
     }
     case 'DELETE_CHARACTER_FROM_FAVORITE_LIST': {
@@ -76,34 +55,16 @@ const characters: Reducer<any> = (state = INITIAL_STATE, action) => {
 
       const newCharacterFavoriteList = {
         charactersItems: state.charactersItems.filter(
-          (item: any) => item.id !== character.id,
+          (item) => item.id !== character.id,
         ),
       }
 
-      /*  setCookie(
-        null,
-        'CHARACTERS_FAVORITE',
-        JSON.stringify(newCharacterFavoriteList),
-        {
-          maxAge: 86400 * 7,
-          path: '/',
-        },
-      ) */
-
-      localStorage.setItem(
-        '@user-dev/favorite-list',
-        JSON.stringify(newCharacterFavoriteList),
+      saveState(
+        process.env.NEXT_PUBLIC_LOCAL_STORAGE_KEY ?? '',
+        newCharacterFavoriteList,
       )
 
       return newCharacterFavoriteList
-
-      /* console.log(character)
-      return produce(state, (draft) => {
-        const characterArrayIndex = state.charactersItems.indexOf(character)
-        console.log(characterArrayIndex)
-        console.log(state.charactersItems)
-        state.charactersItems.splice(characterArrayIndex, 1)
-      }) */
     }
 
     default: {

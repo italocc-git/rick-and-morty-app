@@ -1,4 +1,4 @@
-import { IFilterTypes } from '@/store/modules/characters/type'
+import { IFilterTypes } from '@/types'
 import { Button, Select, Form as FormAntd, Input, Radio, Col, Row } from 'antd'
 
 interface FormProps {
@@ -17,7 +17,6 @@ export const Form = ({ setFilter }: FormProps) => {
 
   const onFinish = (values: IFilterTypes) => {
     const { name, species, status, gender } = values
-    console.log(values)
     setFilter({
       name: name ?? '',
       species: species ?? '',

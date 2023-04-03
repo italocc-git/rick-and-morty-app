@@ -13,6 +13,12 @@ export const StyledTable = styled(TableAntd)`
         padding: 12px 8px;
       }
     }
+    @media (max-width: 400px) {
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        padding: 8px 4px;
+      }
+    }
   }
 `
 

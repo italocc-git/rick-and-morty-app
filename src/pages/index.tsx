@@ -3,6 +3,7 @@ import { useEffect, ReactNode } from 'react'
 import { useDispatch } from 'react-redux'
 import { loadFavoriteList } from '@/store/modules/characters/actions'
 import { useRouter } from 'next/router'
+import { loadState } from '@/utils/localStorage'
 
 interface MainProps {
   children: ReactNode
@@ -11,17 +12,17 @@ interface MainProps {
 export default function Main({ children }: MainProps) {
   const dispatch = useDispatch()
   const router = useRouter()
+
   useEffect(() => {
-    /* const charactersFavorites = parseCookies()?.CHARACTERS_FAVORITE
-      ? JSON.parse(parseCookies().CHARACTERS_FAVORITE)
-      : null */
-    const charactersFavorites = localStorage.getItem('@user-dev/favorite-list')
+    const charactersFavorites = loadState(
+      process.env.NEXT_PUBLIC_LOCAL_STORAGE_KEY ?? '',
+    )
+
     const favoriteListData = charactersFavorites
-      ? JSON.parse(charactersFavorites)
-      : {}
     dispatch(loadFavoriteList(favoriteListData))
+
     router.push('/character-list')
-  }, [])
+  }, [dispatch])
 
   return <>{children}</>
 }

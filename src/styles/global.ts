@@ -1,6 +1,5 @@
-/* import 'antd/dist/antd.css'; */
-import 'antd/dist/reset.css';
-import { createGlobalStyle } from 'styled-components';
+import 'antd/dist/reset.css'
+import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
   *{
@@ -32,4 +31,4 @@ export default createGlobalStyle`
   }
 
   
-`;
+`

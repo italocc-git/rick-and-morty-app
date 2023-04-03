@@ -20,8 +20,9 @@ export default function Main({ children }: MainProps) {
 
     const favoriteListData = charactersFavorites
     dispatch(loadFavoriteList(favoriteListData))
+
     router.push('/character-list')
-  }, [])
+  }, [dispatch])
 
   return <>{children}</>
 }

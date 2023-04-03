@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { useRouter } from 'next/router'
 import { useEffect, useState, useCallback } from 'react'
-import loadingImg from '@/assets/loading.gif'
+import loadingImg from '@/assets/gif/loading.gif'
 import {
   addCharacterToFavorite,
   deleteCaracterFromList,

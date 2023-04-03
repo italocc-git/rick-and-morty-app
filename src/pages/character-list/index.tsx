@@ -54,7 +54,7 @@ export default function CharacterList() {
       </Head>
       <Header title="Favorite Characters" />
 
-      <Form setFilter={setFilter} />
+      <Form setFilter={setFilter} setPage={setPage} />
 
       <Table
         page={page}

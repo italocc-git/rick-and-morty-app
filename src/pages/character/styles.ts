@@ -5,6 +5,14 @@ type SpecificationsProps = {
   status?: 'Alive' | 'Dead' | 'unknown'
 }
 
+export const LoadingContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
 export const CharacterContainer = styled.div`
   display: flex;
   flex-direction: column;

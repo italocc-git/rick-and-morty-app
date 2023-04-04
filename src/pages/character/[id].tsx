@@ -1,7 +1,7 @@
 import api from '@/services/api'
 import { useRouter } from 'next/router'
 import { useEffect, useState, useCallback } from 'react'
-import loadingImg from '@/assets/gif/loading.gif'
+/* import loadingImg from '@/assets/gif/loading.gif' */
 import {
   addCharacterToFavorite,
   deleteCaracterFromList,
@@ -13,7 +13,6 @@ import {
   GenderNeuter,
   Star,
 } from 'phosphor-react'
-import Head from 'next/head'
 import { Header } from '@/components/Header'
 import {
   CharacterContainer,
@@ -23,9 +22,11 @@ import {
   CharacterDetails,
   CharacterDetailsHeader,
   CharacterDetailsInformations,
+  LoadingContainer,
 } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { getNotification } from '@/components/Notification'
+import { Spin } from 'antd'
 
 type CharacterType = {
   id: number
@@ -59,11 +60,12 @@ export default function Character() {
   const [character, setCharacter] = useState<CharacterType>({} as CharacterType)
   const [isFavorite, setIsFavorite] = useState(false)
   const { characters } = useSelector((state) => state) as any
-
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   /* const [episodes, setEpisodes] = useState<Episode>({} as Episode) */
 
   const loadCharacterData = useCallback(() => {
+    setLoading(true)
     if (id) {
       api
         .get(`character/${id}`)
@@ -83,6 +85,7 @@ export default function Character() {
             'Failed',
           ),
         )
+        .finally(() => setLoading(false))
     }
   }, [id, setIsFavorite, setCharacter, characters.charactersItems])
 
@@ -105,19 +108,30 @@ export default function Character() {
     [dispatch, character],
   )
 
+  if (loading) {
+    return (
+      <LoadingContainer>
+        <Spin size="large" />
+        {/* <ImageContainer
+          src={loadingImg}
+          alt="loading-image"
+          height={350}
+          width={350}
+        /> */}
+      </LoadingContainer>
+    )
+  }
+
   return (
     <>
-      <Head>
-        <title>{character.name} | R & M</title>
-      </Head>
-      <Header title={`Character ${character.name}`} />
+      <Header title={`${character.name} | R & M`} />
 
       <CharacterContainer>
         <ImageContainer
-          src={character.image ?? loadingImg}
+          src={character.image}
           width={350}
           height={350}
-          alt={character.name ?? ''}
+          alt={character.name}
           loading="eager"
         />
         <LinkContainer href="/">

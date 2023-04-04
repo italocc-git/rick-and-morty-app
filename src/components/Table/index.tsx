@@ -173,7 +173,6 @@ export const Table = ({
   const handlePaginationChange = (page: TablePaginationConfig) => {
     const { current, pageSize, total } = page
     if (current) {
-      console.log(page)
       setPage({
         pageSize: pageSize ?? 20,
         total: total ?? 1,

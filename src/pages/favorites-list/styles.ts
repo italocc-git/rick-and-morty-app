@@ -1,6 +1,14 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`
+
 export const LinkContainer = styled(Link)`
   display: flex;
   align-items: center;

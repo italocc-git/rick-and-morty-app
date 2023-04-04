@@ -8,6 +8,7 @@ import { Tooltip } from 'antd'
 import { Star } from 'phosphor-react'
 import { FormEvent } from 'react'
 import { ICharacterState } from '@/types'
+import Head from 'next/head'
 type HeaderProps = {
   title?: string
 }
@@ -15,7 +16,6 @@ type HeaderProps = {
 export const Header = ({ title }: HeaderProps) => {
   const { characters } = useSelector((state) => state) as ICharacterState
   const router = useRouter()
-
   const handleRedirectToFavorites = (e: FormEvent) => {
     e.preventDefault()
     router.push('/favorites-list')
@@ -23,8 +23,11 @@ export const Header = ({ title }: HeaderProps) => {
 
   return (
     <HeaderComponent>
+      <Head>
+        <title>{title} </title>
+      </Head>
       <Tooltip title="Home Page">
-        <Link href="/character-list">
+        <Link href="/">
           <Image
             className="test-style"
             src={logoImg.src}

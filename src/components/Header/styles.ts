@@ -18,7 +18,7 @@ export const HeaderComponent = styled.div`
     width: 56px;
     height: 56px;
     border-radius: 6;
-    transition: 0.3;
+    transition: 0.3s;
     cursor: pointer;
     color: black;
     border: 0;

@@ -14,16 +14,7 @@ import {
   Star,
 } from 'phosphor-react'
 import { Header } from '@/components/Header'
-import {
-  CharacterContainer,
-  CharacterDetailsContent,
-  ImageContainer,
-  LinkContainer,
-  CharacterDetails,
-  CharacterDetailsHeader,
-  CharacterDetailsInformations,
-  LoadingContainer,
-} from './styles'
+import CharacterStyle from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { getNotification } from '@/components/Notification'
 import { Spin } from 'antd'
@@ -53,6 +44,17 @@ type CharacterType = {
   air_date: string
   episode: string
 } */
+
+const {
+  CharacterContainer,
+  CharacterDetailsContent,
+  ImageContainer,
+  LinkContainer,
+  CharacterDetails,
+  CharacterDetailsHeader,
+  CharacterDetailsInformations,
+  LoadingContainer,
+} = CharacterStyle
 
 export default function Character() {
   const { query } = useRouter()
@@ -112,121 +114,117 @@ export default function Character() {
     return (
       <LoadingContainer>
         <Spin size="large" />
-        {/* <ImageContainer
-          src={loadingImg}
-          alt="loading-image"
-          height={350}
-          width={350}
-        /> */}
       </LoadingContainer>
     )
   }
 
-  return (
-    <>
-      <Header title={`${character.name} | R & M`} />
+  if (character.id) {
+    return (
+      <>
+        <Header title={`${character.name} | R & M`} />
 
-      <CharacterContainer>
-        <ImageContainer
-          src={character.image}
-          width={350}
-          height={350}
-          alt={character.name}
-          loading="eager"
-        />
-        <LinkContainer href="/">
-          <ArrowLeft size={32} />
-          <span>Back</span>
-        </LinkContainer>
-        <CharacterDetails>
-          <CharacterDetailsHeader>
-            <h1>{character.name}</h1>
-            {isFavorite ? (
-              <Star
-                size={28}
-                weight="fill"
-                onClick={() => handleAddCharacterToFavorite(isFavorite)}
-              />
-            ) : (
-              <Star
-                size={28}
-                weight="bold"
-                onClick={() => handleAddCharacterToFavorite(isFavorite)}
-              />
-            )}
-          </CharacterDetailsHeader>
-          <CharacterDetailsContent>
-            <CharacterDetailsInformations status={'Alive'}>
-              <h1>Informations</h1>
-              <div>
-                <div className="information-style">
-                  <h2>Gender</h2>
-                  <span>
-                    {character.gender === 'Male' ? (
-                      <GenderMale />
-                    ) : character.gender === 'Female' ? (
-                      <GenderFemale />
-                    ) : (
-                      <GenderNeuter />
-                    )}
-                  </span>
+        <CharacterContainer>
+          <ImageContainer
+            src={character.image}
+            width={350}
+            height={350}
+            alt={character.name}
+            loading="eager"
+          />
+          <LinkContainer href="/">
+            <ArrowLeft size={32} />
+            <span>Back</span>
+          </LinkContainer>
+          <CharacterDetails>
+            <CharacterDetailsHeader>
+              <h1>{character.name}</h1>
+              {isFavorite ? (
+                <Star
+                  size={28}
+                  weight="fill"
+                  onClick={() => handleAddCharacterToFavorite(isFavorite)}
+                />
+              ) : (
+                <Star
+                  size={28}
+                  weight="bold"
+                  onClick={() => handleAddCharacterToFavorite(isFavorite)}
+                />
+              )}
+            </CharacterDetailsHeader>
+            <CharacterDetailsContent>
+              <CharacterDetailsInformations status={'Alive'}>
+                <h1>Informations</h1>
+                <div>
+                  <div className="information-style">
+                    <h2>Gender</h2>
+                    <span>
+                      {character.gender === 'Male' ? (
+                        <GenderMale />
+                      ) : character.gender === 'Female' ? (
+                        <GenderFemale />
+                      ) : (
+                        <GenderNeuter />
+                      )}
+                    </span>
+                  </div>
+                  <div className="information-style">
+                    <h2>Status</h2>
+                    <span>{character.status}</span>
+                  </div>
+                  <div className="information-style">
+                    <h2>Specie</h2>
+                    <span>{character.species}</span>
+                  </div>
+                  <div className="information-style">
+                    <h2>Origin</h2>
+                    <span>{character.origin?.name}</span>
+                  </div>
+                  <div className="information-style">
+                    <h2>Type</h2>
+                    <span>
+                      {character.type === '' ? 'unknown' : character.type}
+                    </span>
+                  </div>
+                  <div className="information-style">
+                    <h2>Location</h2>
+                    <span>{character.location?.name}</span>
+                  </div>
                 </div>
-                <div className="information-style">
-                  <h2>Status</h2>
-                  <span>{character.status}</span>
-                </div>
-                <div className="information-style">
-                  <h2>Specie</h2>
-                  <span>{character.species}</span>
-                </div>
-                <div className="information-style">
-                  <h2>Origin</h2>
-                  <span>{character.origin?.name}</span>
-                </div>
-                <div className="information-style">
-                  <h2>Type</h2>
-                  <span>
-                    {character.type === '' ? 'unknown' : character.type}
-                  </span>
-                </div>
-                <div className="information-style">
-                  <h2>Location</h2>
-                  <span>{character.location?.name}</span>
-                </div>
-              </div>
-            </CharacterDetailsInformations>
-            <CharacterDetailsInformations>
-              <h1>Episodes</h1>
-              {/*  <div>
-                                <div className='information-style'>
-                                    <h2>Gender</h2>
-                                    <span>{character.gender === 'Male' ? <GenderMale/> : character.gender === 'Female' ? <GenderFemale/> : <GenderNeuter/>}</span>    
-                                </div>
-                                <div  className='information-style'>
-                                    <h2>Status</h2>
-                                    <span>{character.status}</span>
-                                </div>
-                                <div  className='information-style'>
-                                    <h2>Specie</h2>
-                                    <span>{character.species}</span>
-                                </div> 
-                                <div  className='information-style'>
-                                    <h2>Origin</h2>
-                                    <span>{character.origin.name}</span>
-                                </div>
-                                <div  className='information-style'>
-                                    <h2>Type</h2>
-                                    <span>{character.type === '' ? 'unknown' : character.type}</span>
-                                </div>
-                                <div  className='information-style'>
-                                    <h2>Location</h2>
-                                    <span>{character.location.name}</span>
-                                </div>  
-                            </div> */}
-            </CharacterDetailsInformations>
-          </CharacterDetailsContent>
-        </CharacterDetails>
-      </CharacterContainer>
-    </>
-  )
+              </CharacterDetailsInformations>
+              {/* <CharacterDetailsInformations>
+                <h1>Episodes</h1>
+                  <div>
+                                  <div className='information-style'>
+                                      <h2>Gender</h2>
+                                      <span>{character.gender === 'Male' ? <GenderMale/> : character.gender === 'Female' ? <GenderFemale/> : <GenderNeuter/>}</span>    
+                                  </div>
+                                  <div  className='information-style'>
+                                      <h2>Status</h2>
+                                      <span>{character.status}</span>
+                                  </div>
+                                  <div  className='information-style'>
+                                      <h2>Specie</h2>
+                                      <span>{character.species}</span>
+                                  </div> 
+                                  <div  className='information-style'>
+                                      <h2>Origin</h2>
+                                      <span>{character.origin.name}</span>
+                                  </div>
+                                  <div  className='information-style'>
+                                      <h2>Type</h2>
+                                      <span>{character.type === '' ? 'unknown' : character.type}</span>
+                                  </div>
+                                  <div  className='information-style'>
+                                      <h2>Location</h2>
+                                      <span>{character.location.name}</span>
+                                  </div>  
+                              </div>
+              </CharacterDetailsInformations>  */}
+            </CharacterDetailsContent>
+          </CharacterDetails>
+        </CharacterContainer>
+      </>
+    )
+  }
 }

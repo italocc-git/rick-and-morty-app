@@ -3,12 +3,22 @@ import { Card, Col, Row } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
-import { ArrowLeft } from 'phosphor-react'
-import { LinkContainer } from './styles'
+import { ArrowLeft, Trash } from 'phosphor-react'
+import FavoriteStyle from './styles'
 import { ICharacterState } from '@/types'
+import { useStorage } from '@/hooks/useStorage'
+import { useRouter } from 'next/router'
 export default function FavoritesList() {
+  const { reload } = useRouter()
   const { Meta } = Card
   const { characters } = useSelector((state) => state) as ICharacterState
+  const { clearState } = useStorage()
+
+  const handleClearFavoriteList = () => {
+    clearState(process.env.NEXT_PUBLIC_LOCAL_STORAGE_KEY ?? '')
+    reload()
+  }
+  const { LinkContainer, ButtonCleanFavorites } = FavoriteStyle
 
   if (characters.charactersItems.length === 0) {
     return (
@@ -43,12 +53,18 @@ export default function FavoritesList() {
       <Header title="Favorite Characters | R & M" />
 
       <div style={{ width: '100%', padding: '1rem' }}>
-        <Row>
+        <Row justify="space-between">
           <Col>
             <LinkContainer href="/">
               <ArrowLeft size={32} />
               <span>Back</span>
             </LinkContainer>
+          </Col>
+          <Col>
+            <ButtonCleanFavorites onClick={handleClearFavoriteList}>
+              <Trash size={32} />
+              <span>Clean All</span>
+            </ButtonCleanFavorites>
           </Col>
         </Row>
         <Row gutter={[16, 16]} justify="center">

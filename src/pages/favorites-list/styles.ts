@@ -19,4 +19,16 @@ const LinkContainer = styled(Link)`
   cursor: pointer;
 `
 
-export default { Container, LinkContainer }
+const ButtonCleanFavorites = styled.button`
+  display: flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: black;
+  transition: 0.3s;
+  &:hover {
+    color: #1677ff;
+  }
+`
+
+export default { Container, LinkContainer, ButtonCleanFavorites }

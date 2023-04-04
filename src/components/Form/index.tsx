@@ -29,13 +29,6 @@ export const Form = ({ setFilter }: FormProps) => {
 
   const onReset = () => {
     form.resetFields()
-    /* setPage((prevState: TablePagination) => {
-      return {
-        ...prevState,
-        current: 1,
-      } Ver o bug 
-    }) */
-
     form.submit()
   }
 

@@ -1,5 +1,5 @@
+import { saveState } from './../../../hooks/useStorage'
 import { IFavoriteCharacterState } from '@/types'
-import { saveState } from '@/utils/localStorage'
 import { Reducer } from 'redux'
 
 const INITIAL_STATE: IFavoriteCharacterState = {
@@ -44,7 +44,6 @@ const characters: Reducer<IFavoriteCharacterState> = (
             },
           ],
         }
-        console.log(newStateList)
       }
       saveState(process.env.NEXT_PUBLIC_LOCAL_STORAGE_KEY ?? '', newStateList)
 

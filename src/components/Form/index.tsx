@@ -1,12 +1,12 @@
-import { IFilterTypes, TablePagination } from '@/types'
+import { IFilterTypes } from '@/types'
 import { Button, Select, Form as FormAntd, Input, Radio, Col, Row } from 'antd'
 
 interface FormProps {
   setFilter: (filter: IFilterTypes) => void
-  setPage: (page: (prevState: TablePagination) => TablePagination) => void
+  /* setPage: (page: (prevState: TablePagination) => TablePagination) => void */
 }
 
-export const Form = ({ setFilter, setPage }: FormProps) => {
+export const Form = ({ setFilter }: FormProps) => {
   const [form] = FormAntd.useForm()
 
   const filterInitialValues = {
@@ -29,12 +29,12 @@ export const Form = ({ setFilter, setPage }: FormProps) => {
 
   const onReset = () => {
     form.resetFields()
-    setPage((prevState: TablePagination) => {
+    /* setPage((prevState: TablePagination) => {
       return {
         ...prevState,
         current: 1,
-      }
-    })
+      } Ver o bug 
+    }) */
 
     form.submit()
   }

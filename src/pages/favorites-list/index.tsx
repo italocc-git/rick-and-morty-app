@@ -4,12 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { ArrowLeft } from 'phosphor-react'
-import { LinkContainer } from './styles'
+import FavoriteStyle from './styles'
 import { ICharacterState } from '@/types'
 export default function FavoritesList() {
   const { Meta } = Card
   const { characters } = useSelector((state) => state) as ICharacterState
-
   if (characters.charactersItems.length === 0) {
     return (
       <div
@@ -45,10 +44,10 @@ export default function FavoritesList() {
       <div style={{ width: '100%', padding: '1rem' }}>
         <Row>
           <Col>
-            <LinkContainer href="/">
+            <FavoriteStyle.LinkContainer href="/">
               <ArrowLeft size={32} />
               <span>Back</span>
-            </LinkContainer>
+            </FavoriteStyle.LinkContainer>
           </Col>
         </Row>
         <Row gutter={[16, 16]} justify="center">

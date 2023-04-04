@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@ export const Container = styled.div`
   height: 100vh;
 `
 
-export const LinkContainer = styled(Link)`
+const LinkContainer = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -18,3 +18,5 @@ export const LinkContainer = styled(Link)`
   color: black;
   cursor: pointer;
 `
+
+export default { Container, LinkContainer }

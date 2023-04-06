@@ -4,7 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { ArrowLeft, Trash } from 'phosphor-react'
-import FavoriteStyle from './styles'
+import {
+  LinkContainer,
+  ButtonCleanFavorites,
+} from '../../styles/pages/favorites-list/styles'
 import { ICharacterState } from '@/types'
 import { useStorage } from '@/hooks/useStorage'
 import { useRouter } from 'next/router'
@@ -18,7 +21,6 @@ export default function FavoritesList() {
     clearState(process.env.NEXT_PUBLIC_LOCAL_STORAGE_KEY ?? '')
     reload()
   }
-  const { LinkContainer, ButtonCleanFavorites } = FavoriteStyle
 
   if (characters.charactersItems.length === 0) {
     return (

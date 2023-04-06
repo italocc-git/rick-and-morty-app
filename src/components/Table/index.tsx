@@ -8,7 +8,7 @@ import { LeftSquareOutlined, RightSquareOutlined } from '@ant-design/icons'
 import { Star } from 'phosphor-react'
 import { Spin, TablePaginationConfig } from 'antd'
 import { getNotification } from '../Notification'
-import { StyledTable, StyledTag } from './styles'
+import { StyledTable, StyledTag } from '../../styles/components/Table/styles'
 import Image from 'next/image'
 import Link from 'next/link'
 import {

@@ -11,7 +11,7 @@ Rick and Morty é uma aplicação criada em Next JS e foi um desafio proposto pe
 O projeto consiste em uma tela de listagem de personanges com busca e paginação e uma tela de detalhes que deve conter informações sobre os personangens da série Rick and Morty e uma opção para favoritar ou não o personagem. <b> <i>Toda a aplicação foi construída do zero em 1 semana </i> </b>
 
 ## Layout web
-![Web](https://github.com/italocc-git/rick-and-morty-app/blob/main/src/assets/gif/presentation-git.gif)
+![Web](https://github.com/italocc-git/rick-and-morty-app/blob/main/src/assets/gif/presentation.gif)
 
 ## Funcionalidades 
 

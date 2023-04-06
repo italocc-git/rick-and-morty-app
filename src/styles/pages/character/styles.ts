@@ -5,7 +5,7 @@ type SpecificationsProps = {
   status?: 'Alive' | 'Dead' | 'unknown'
 }
 
-const LoadingContainer = styled.div`
+export const LoadingContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@ const LoadingContainer = styled.div`
   justify-content: center;
 `
 
-const CharacterContainer = styled.div`
+export const CharacterContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -22,11 +22,11 @@ const CharacterContainer = styled.div`
   position: relative;
 `
 
-const ImageContainer = styled(Image)`
+export const ImageContainer = styled(Image)`
   border-radius: 150px;
 `
 
-const LinkContainer = styled(Link)`
+export const LinkContainer = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -37,14 +37,14 @@ const LinkContainer = styled(Link)`
   color: black;
 `
 
-const CharacterDetails = styled.div`
+export const CharacterDetails = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
   width: 100%;
 `
 
-const CharacterDetailsHeader = styled.div`
+export const CharacterDetailsHeader = styled.div`
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -60,14 +60,14 @@ const CharacterDetailsHeader = styled.div`
   }
 `
 
-const CharacterDetailsContent = styled.div`
+export const CharacterDetailsContent = styled.div`
   display: flex;
   gap: 1.5rem;
   align-items: center;
   justify-content: center;
 `
 
-const CharacterDetailsInformations = styled.div<SpecificationsProps>`
+export const CharacterDetailsInformations = styled.div<SpecificationsProps>`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -112,13 +112,3 @@ const CharacterDetailsInformations = styled.div<SpecificationsProps>`
     } */
   }
 `
-export default {
-  LoadingContainer,
-  CharacterContainer,
-  ImageContainer,
-  LinkContainer,
-  CharacterDetails,
-  CharacterDetailsHeader,
-  CharacterDetailsContent,
-  CharacterDetailsInformations,
-}

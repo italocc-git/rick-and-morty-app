@@ -14,7 +14,16 @@ import {
   Star,
 } from 'phosphor-react'
 import { Header } from '@/components/Header'
-import CharacterStyle from './styles'
+import {
+  CharacterContainer,
+  CharacterDetailsContent,
+  ImageContainer,
+  LinkContainer,
+  CharacterDetails,
+  CharacterDetailsHeader,
+  CharacterDetailsInformations,
+  LoadingContainer,
+} from '../../styles/pages/character/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { getNotification } from '@/components/Notification'
 import { Spin } from 'antd'
@@ -44,17 +53,6 @@ type CharacterType = {
   air_date: string
   episode: string
 } */
-
-const {
-  CharacterContainer,
-  CharacterDetailsContent,
-  ImageContainer,
-  LinkContainer,
-  CharacterDetails,
-  CharacterDetailsHeader,
-  CharacterDetailsInformations,
-  LoadingContainer,
-} = CharacterStyle
 
 export default function Character() {
   const { query } = useRouter()

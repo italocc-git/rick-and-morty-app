@@ -12,7 +12,7 @@ import {
 } from '@/types'
 import { getNotification } from '@/components/Notification'
 import { Spin } from 'antd'
-import ListCharactersStyle from './styles'
+import { Container, LoadingContainer } from '../styles/pages/styles'
 
 export default function CharacterList() {
   const filterInitialValues = {
@@ -34,8 +34,6 @@ export default function CharacterList() {
     pages: 42,
   })
   const [loading, setLoading] = useState<boolean>(false)
-
-  const { Container, LoadingContainer } = ListCharactersStyle
 
   useEffect(() => {
     setLoading(true)

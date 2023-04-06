@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,7 +9,7 @@ const Container = styled.div`
   height: 100vh;
 `
 
-const LinkContainer = styled(Link)`
+export const LinkContainer = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -19,7 +19,7 @@ const LinkContainer = styled(Link)`
   cursor: pointer;
 `
 
-const ButtonCleanFavorites = styled.button`
+export const ButtonCleanFavorites = styled.button`
   display: flex;
   align-items: center;
   border: 0;
@@ -30,5 +30,3 @@ const ButtonCleanFavorites = styled.button`
     color: #1677ff;
   }
 `
-
-export default { Container, LinkContainer, ButtonCleanFavorites }

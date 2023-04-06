@@ -1,4 +1,4 @@
-import { HeaderComponent } from './styles'
+import { HeaderComponent } from '../../styles/components/Header/styles'
 import logoImg from '@/assets/logo-black-1.svg'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'

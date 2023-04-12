@@ -4,7 +4,11 @@
 
 # Sobre o projeto
 
+<<<<<<< HEAD
 https://rick-and-morty-app-nine-wheat.vercel.app/
+=======
+https://rick-and-morty-hqqts6ib7-italocc-git.vercel.app/
+>>>>>>> 88b4f793a2948545c0de5640318ed8b92a77fb95
 
 Rick and Morty é uma aplicação criada em Next JS e foi um desafio proposto pela empresa Green Acesso como fase de um processo seletivo.
 

@@ -20,6 +20,10 @@ export const CharacterContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+
+  @media (max-width: 615px) {
+    margin-left: 1rem;
+  }
 `
 
 export const ImageContainer = styled(Image)`

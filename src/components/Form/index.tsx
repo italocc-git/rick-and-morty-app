@@ -101,16 +101,21 @@ export const Form = ({ setFilter }: FormProps) => {
           </FormAntd.Item>
         </Col>
         <Col xxl={8} xl={8} lg={0} md={0} sm={0} xs={0}></Col>
-        <Col xxl={2} xl={2} lg={2} md={3} sm={4} xs={4}>
+        <Col xxl={2} xl={2} lg={2} md={3} sm={4} xs={5}>
           <FormAntd.Item>
-            <Button type="default" onClick={onReset} htmlType="button">
+            <Button
+              type="default"
+              style={{ width: '100%' }}
+              onClick={onReset}
+              htmlType="button"
+            >
               Reset
             </Button>
           </FormAntd.Item>
         </Col>
-        <Col xxl={2} xl={2} lg={2} md={3} sm={4} xs={4}>
+        <Col xxl={2} xl={2} lg={2} md={3} sm={4} xs={5}>
           <FormAntd.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" style={{ width: '100%' }} htmlType="submit">
               Filter
             </Button>
           </FormAntd.Item>

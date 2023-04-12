@@ -83,17 +83,19 @@ export const Table = ({
       align: 'center' as const,
 
       render: (imageUrl: string, record: any) => (
-        <Image
-          style={{ borderRadius: 999 }}
-          src={imageUrl}
-          width={48}
-          height={48}
-          alt={record.name}
-        />
+        <Link href={`/character/${record.id}`}>
+          <Image
+            style={{ borderRadius: 999 }}
+            src={imageUrl}
+            width={48}
+            height={48}
+            alt={record.name}
+          />
+        </Link>
       ),
     },
     {
-      title: 'Nome',
+      title: 'Name',
       dataIndex: 'name',
       responsive: ['sm'] as any,
       align: 'center' as const,
@@ -115,12 +117,12 @@ export const Table = ({
         ),
     },
     {
-      title: 'Espécie',
+      title: 'Specie',
       dataIndex: 'species',
       align: 'center' as const,
     },
     {
-      title: 'Gênero',
+      title: 'Gender',
       dataIndex: 'gender',
       align: 'center' as const,
       render: (gender: string) =>
@@ -133,7 +135,7 @@ export const Table = ({
         ),
     },
     {
-      title: 'Favorito?',
+      title: 'Favorite?',
       align: 'center' as const,
       width: '10%',
       render: (data: any) => {
